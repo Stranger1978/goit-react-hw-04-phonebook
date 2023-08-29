@@ -2,7 +2,7 @@ import { useState } from 'react';
 import style from './ContactForm.module.css';
 
 
-export default function ContactForm()  {
+export default function ContactForm({ onSubmit })  {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -22,20 +22,21 @@ export default function ContactForm()  {
       }
   };
 
-    handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const { name, number } = this.state;
-    this.props.onSubmit(name, number);
-    this.reset();
+   
+    onSubmit(name, number);
+    reset();
     };
     
-    reset = () => {
-    this.setState({name: '', number: ''});
+    const reset = () => {
+    setName('')
+    setNumber('')
     };
-    
-     return (
-         <form onSubmit={this.handleSubmit} className={style.form}>
-             <label htmlFor={this.nameInputId} className={style.form_label}>Name
+  
+  return (
+         <form onSubmit={handleSubmit} className={style.form}>
+             <label className={style.form_label}>Name
           <input
             type="text"
             className={style.form_input}
@@ -47,7 +48,7 @@ export default function ContactForm()  {
             onChange={handleChange}       
           />
         </label>
-             <label htmlFor={this.numberInputId} className={style.form_label}>Number
+             <label className={style.form_label}>Number
           <input
             type="tel"
             className={style.form_input}
@@ -64,6 +65,7 @@ export default function ContactForm()  {
              <button type='submit' className={style.form_button}>Add contact</button>
     </form>
       );
-  };
+    };
+    
 
 
