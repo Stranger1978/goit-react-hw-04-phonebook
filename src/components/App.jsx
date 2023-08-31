@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
@@ -43,6 +43,19 @@ export function App() {
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizeFilter));
   };
+
+  useEffect(() => {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+
+    if (parsedContacts) { 
+      setContacts(parsedContacts);
+    }
+  },[])
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
     const visibleContacts = getVisibleContact();
     return (
